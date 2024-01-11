@@ -15,6 +15,8 @@ public:
     Q_INVOKABLE void insert(int value);
     Q_INVOKABLE void removeSmallest();
     Q_INVOKABLE void clearHeap();
+    Q_INVOKABLE void decreaseKey(int from, int to);
+    Q_INVOKABLE void deleteNode(int value);
     Q_INVOKABLE QString getCurrentNodes() const;
 
 signals:

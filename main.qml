@@ -5,7 +5,7 @@ import QtQuick.Layouts 2.15
 ApplicationWindow {
     visible: true
     title: "Fibonacci Heap Visualizer"
-    width: 600
+    width: 1400
     height: 800
 
     ColumnLayout {
@@ -41,6 +41,46 @@ ApplicationWindow {
                     font.pixelSize: 20
                     onClicked: {
                         fibHeapWrapper.removeSmallest();
+                    }
+                }
+
+                TextField {
+                    id: currentKey
+                    placeholderText: "Current Key"
+                    font.pixelSize: 20
+                    Layout.fillWidth: true
+                }
+
+                TextField {
+                    id: newKey
+                    placeholderText: "New Key"
+                    font.pixelSize: 20
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Decrease key"
+                    font.pixelSize: 20
+                    onClicked: {
+                        fibHeapWrapper.decreaseKey(parseInt(currentKey.text), parseInt(newKey.text));
+                        currentKey.text = "";
+                        newKey.text = "";
+                    }
+                }
+
+                TextField {
+                    id: deleteKey
+                    placeholderText: "Key to Delete"
+                    font.pixelSize: 20
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Delete key"
+                    font.pixelSize: 20
+                    onClicked: {
+                        fibHeapWrapper.deleteNode(parseInt(deleteKey.text));
+                        deleteKey.text = "";
                     }
                 }
 

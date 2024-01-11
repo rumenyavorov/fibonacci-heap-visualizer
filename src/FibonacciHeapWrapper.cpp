@@ -19,6 +19,16 @@ void FibonacciHeapWrapper::clearHeap() {
     emit nodesChanged();
 }
 
+void FibonacciHeapWrapper::decreaseKey(int from, int to) {
+    //TODO: Implement logic to decrease key
+    emit nodesChanged();
+}
+
+void FibonacciHeapWrapper::deleteNode(int value) {
+    //TODO: Implement logic to delete node
+    emit nodesChanged();
+}
+
 QString FibonacciHeapWrapper::getCurrentNodes() const {
     return QString::fromStdString(fibHeap.getNodeKeys());
 }

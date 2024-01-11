@@ -19,7 +19,7 @@ void FibonacciHeap::merge(FibonacciHeap &another)
     another.m_numOfNodes = 0;
 }
 
-int  FibonacciHeap::extract_min()
+int FibonacciHeap::extract_min()
 {
     FibonacciHeapNode* minNode = _extract_min_node();
     int ret = minNode->key;
@@ -216,7 +216,8 @@ void FibonacciHeap::_decrease_key(FibonacciHeapNode* x, int newKey)
         m_minNode = x;
 }
 
-void FibonacciHeap::_traverseNodes(FibonacciHeapNode* start, std::string& result) const {
+void FibonacciHeap::_traverseNodes(FibonacciHeapNode* start, std::string& result) const
+{
     FibonacciHeapNode* current = start;
     do {
         if (!result.empty()) {
@@ -229,7 +230,6 @@ void FibonacciHeap::_traverseNodes(FibonacciHeapNode* start, std::string& result
         current = current->right;
     } while (current != start);
 }
-
 
 /***********************************************************************
 * Remove x from the child list of y, decrement y->degree
@@ -271,7 +271,8 @@ void FibonacciHeap::_cascading_cut(FibonacciHeapNode* y)
   When t1 == x for the second time (the first time is at t1's initialization),
   t1 has completed the traversal.
 **********************************************************************/
-void FibonacciHeap::_clear(FibonacciHeapNode* x) {
+void FibonacciHeap::_clear(FibonacciHeapNode* x)
+{
     if (x != nullptr) {
         FibonacciHeapNode* curr = x;
         do {

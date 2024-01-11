@@ -4,11 +4,14 @@
 #include <cmath>
 #include <string>
 #include <vector>
+
 using namespace std;
 
-namespace fib_heap{
+namespace fib_heap
+{
 
-struct FibonacciHeapNode {
+struct FibonacciHeapNode
+{
     int key;
     FibonacciHeapNode* left;
     FibonacciHeapNode* right;
@@ -19,7 +22,8 @@ struct FibonacciHeapNode {
     int id;
 };
 
-class FibonacciHeap {
+class FibonacciHeap
+{
 public:
     FibonacciHeapNode* m_minNode;
     int m_numOfNodes;
@@ -41,7 +45,7 @@ public:
     void merge(FibonacciHeap &another);
 
     /* Return the key of the minimum node*/
-    int  extract_min();
+    int extract_min();
 
     /* Decrease the key of node x to newKey*/
     void decrease_key(FibonacciHeapNode* x, int newKey);
@@ -69,7 +73,6 @@ public:
     void _cascading_cut(FibonacciHeapNode* y);
     void _clear(FibonacciHeapNode* x);
     void _traverseNodes(FibonacciHeapNode* start, string& result) const;
-
 };
 
 }
