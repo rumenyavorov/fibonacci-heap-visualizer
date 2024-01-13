@@ -1,6 +1,8 @@
 #ifndef FIBONACCIHEAP_H
 #define FIBONACCIHEAP_H
 
+#include "qobject.h"
+#include "src/VisualNode.h"
 #include <cmath>
 #include <string>
 #include <vector>
@@ -57,6 +59,7 @@ public:
 
     void clear(); // Method to clear the heap
 
+    std::vector<VisualNode*> getVisualNodes() const;
 
     // private:
     static const int m_minimumKey;
@@ -73,6 +76,9 @@ public:
     void _cascading_cut(FibonacciHeapNode* y);
     void _clear(FibonacciHeapNode* x);
     void _traverseNodes(FibonacciHeapNode* start, string& result) const;
+
+    void addChildren(FibonacciHeapNode* current, VisualNode* parentVisualNode, std::vector<VisualNode*>& result) const;
+
 };
 
 }

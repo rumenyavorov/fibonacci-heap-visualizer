@@ -18,7 +18,8 @@ qt_add_executable(fibonacciApp src/main.cpp
     src/FibonacciHeap.cpp
 
     src/FibonacciHeapWrapper.cpp
-    src/FibonacciHeapWrapper.h)
+    src/FibonacciHeapWrapper.h
+    src/VisualNode.h src/VisualNode.cpp)
 
 qt_add_resources(fibonacciApp "configuration"
     PREFIX "/"

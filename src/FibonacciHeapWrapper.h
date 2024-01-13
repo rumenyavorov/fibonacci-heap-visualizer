@@ -18,6 +18,8 @@ public:
     Q_INVOKABLE void decreaseKey(int from, int to);
     Q_INVOKABLE void deleteNode(int value);
     Q_INVOKABLE QString getCurrentNodes() const;
+    Q_INVOKABLE QList<QObject*> getNodes() const;
+
 
 signals:
     void nodesChanged();

@@ -32,3 +32,12 @@ void FibonacciHeapWrapper::deleteNode(int value) {
 QString FibonacciHeapWrapper::getCurrentNodes() const {
     return QString::fromStdString(fibHeap.getNodeKeys());
 }
+
+QList<QObject*> FibonacciHeapWrapper::getNodes() const {
+    auto nodes = fibHeap.getVisualNodes();
+    QList<QObject*> qNodes;
+    for (VisualNode* node : nodes) {
+        qNodes.append(node);
+    }
+    return qNodes;
+}

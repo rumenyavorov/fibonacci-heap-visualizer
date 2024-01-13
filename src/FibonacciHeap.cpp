@@ -286,4 +286,50 @@ void FibonacciHeap::_clear(FibonacciHeapNode* x)
     }
 }
 
+void FibonacciHeap::addChildren(FibonacciHeapNode* current, VisualNode* parentVisualNode, std::vector<VisualNode*>& result) const {
+    if (!current) return;
+
+    FibonacciHeapNode* startNode = current;
+    do {
+        VisualNode* visualNode = new VisualNode(current->key, current->degree, current->id);
+        if (parentVisualNode) {
+            parentVisualNode->addChild(visualNode);
+        } else {
+            result.push_back(visualNode);
+        }
+
+        if (current->child) {
+            addChildren(current->child, visualNode, result);
+        }
+
+        current = current->right;
+    } while (current != startNode);
+}
+
+std::vector<VisualNode*> FibonacciHeap::getVisualNodes() const {
+    std::vector<VisualNode*> result;
+    if (!m_minNode) return result;
+
+    //start with the minimum node and iterate over the root list
+    FibonacciHeapNode* current = m_minNode;
+    do {
+        VisualNode* visualNode = new VisualNode(current->key, current->degree, current->id);
+        result.push_back(visualNode);
+
+        if (current->child) {
+            addChildren(current->child, visualNode, result);
+        }
+
+        current = current->right;
+    } while (current != m_minNode);
+
+    //mark the min node
+    for (VisualNode* node : result) {
+        if (node->key() == m_minNode->key) {
+            node->setIsMin(true);
+        }
+    }
+
+    return result;
+}
 }
