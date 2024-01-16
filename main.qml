@@ -107,29 +107,37 @@ ApplicationWindow {
                 var nodeData = fibHeapWrapper.getNodes();
 
                 // Define the properties for nodes and drawing dimensions
-                var horizontalNodeDistance = 100; // Minimum horizontal distance between nodes
+                var horizontalNodeDistance = 50; // Minimum horizontal distance between nodes
                 var arrowLength = 20; // Length of the arrow
                 var arrowWidth = 6; // Width of the arrowhead
                 var radius = 20; // Radius of each node
                 var minDrawn = false; // Flag to for min label
 
+                var maxDegree = 0;
+                for (let i = 0; i < nodeData.length; i++) {
+                    if (nodeData[i].degree > maxDegree) {
+                        maxDegree = nodeData[i].degree;
+                    }
+                }
                 // Dimensions for the array representation
                 var arrayElementWidth = 40;
                 var arrayElementHeight = 20;
-                var arrayStartX = (width - (arrayElementWidth * nodeData.length)) / 2; // Center the array horizontally
+                var totalDegrees = maxDegree + 1; // +1 because degree levels start at 0
+                var arrayStartX = (width - (arrayElementWidth * totalDegrees)) / 2; // Center the array horizontally
                 var arrayStartY = 10; // Start from the top of the canvas
 
-                // Draw the array representation of the heap
-                for (let i = 0; i < nodeData.length; i++) {
-                    ctx.strokeRect(arrayStartX + i * arrayElementWidth, arrayStartY, arrayElementWidth, arrayElementHeight);
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(i, arrayStartX + i * arrayElementWidth + arrayElementWidth / 2, arrayStartY + arrayElementHeight / 2);
+                // Draw the array representation of the heap's degree
+                if(maxDegree > 0) {
+                    for (let degree = 0; degree <= maxDegree; degree++) {
+                        ctx.strokeRect(arrayStartX + degree * arrayElementWidth, arrayStartY, arrayElementWidth, arrayElementHeight);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(degree + 1, arrayStartX + degree * arrayElementWidth + arrayElementWidth / 2, arrayStartY + arrayElementHeight / 2);
+                    }
                 }
 
                 // Function to draw an arrow pointing to the minimum node
                 function drawArrow(x, y) {
-                    // Arrow shaft
                     ctx.beginPath();
                     ctx.moveTo(x, y);
                     ctx.lineTo(x, y - arrowLength + 5);
@@ -188,11 +196,23 @@ ApplicationWindow {
                 }, 0);
                 var startX = (width - totalNodesWidth) / 2 + radius;
                 var startY = arrayStartY + arrayElementHeight + arrowLength + 40; // Y-coordinate for the root nodes, adjusted for arrow and label
+                var verticalGap = 100;
 
                 // Draw each root node and its children
-                nodeData.forEach(function(rootNode) {
-                    drawNode(rootNode, startX, startY, 0); // Level is 0 for root nodes
-                    startX += (rootNode.children.length + 1) * (2 * radius + horizontalNodeDistance); // Move X-coordinate for the next tree
+                nodeData.forEach(function(rootNode, index) {
+                    drawNode(rootNode, startX, startY + verticalGap, 0); // Level is 0 for root nodes
+
+                    // Only draw a line to the next node if it's not the last one
+                    if(index < nodeData.length - 1) {
+                        var nextNodeX = startX + (rootNode.children.length + 1) * (2 * radius + horizontalNodeDistance);
+                        ctx.beginPath();
+                        ctx.moveTo(startX + radius, startY + verticalGap);
+                        ctx.lineTo((nextNodeX - horizontalNodeDistance / 2) + radius, startY + verticalGap); // End line halfway to the next node
+                        ctx.stroke();
+                    }
+
+                    // Update startX for the next node
+                    startX += (rootNode.children.length + 1) * ((2 * radius) + horizontalNodeDistance); // Move X-coordinate for the next tree
                 });
             }
 
