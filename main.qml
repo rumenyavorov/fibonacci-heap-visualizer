@@ -8,12 +8,13 @@ ApplicationWindow {
     width: 1400
     height: 800
 
+    property bool doesNodeExist: false
+
     ColumnLayout {
         anchors.fill: parent
 
-        // Grey Rectangle as a Header
         Rectangle {
-            color: "#f0f0f0" // Light grey color
+            color: "#f0f0f0"
             Layout.fillWidth: true
             height: 100
 
@@ -37,13 +38,13 @@ ApplicationWindow {
                 }
 
                 Button {
-                    id: rmvBtn
+                    id: removeBtn
                     text: "Remove Smallest"
                     font.pixelSize: 20
                     onClicked: {
                         fibHeapWrapper.removeSmallest();
                     }
-                    enabled: false
+                    enabled: doesNodeExist
                 }
 
                 TextField {
@@ -51,6 +52,7 @@ ApplicationWindow {
                     placeholderText: "Current Key"
                     font.pixelSize: 20
                     Layout.fillWidth: true
+                    visible: doesNodeExist
                 }
 
                 TextField {
@@ -58,32 +60,40 @@ ApplicationWindow {
                     placeholderText: "New Key"
                     font.pixelSize: 20
                     Layout.fillWidth: true
+                    visible: doesNodeExist
                 }
 
                 Button {
+                    id: decreaseBtn
                     text: "Decrease key"
                     font.pixelSize: 20
                     onClicked: {
-                        fibHeapWrapper.decreaseKey(parseInt(currentKey.text), parseInt(newKey.text));
+                        if(parseInt(currentKey.text) > parseInt(newKey.text)){
+                            fibHeapWrapper.decreaseKey(parseInt(currentKey.text), parseInt(newKey.text));
+                        }
                         currentKey.text = "";
                         newKey.text = "";
                     }
+                    enabled: doesNodeExist
                 }
 
                 TextField {
-                    id: deleteKey
-                    placeholderText: "Key to Delete"
+                    id: deleteNode
+                    placeholderText: "Node to Delete"
                     font.pixelSize: 20
                     Layout.fillWidth: true
+                    visible: doesNodeExist
                 }
 
                 Button {
-                    text: "Delete key"
+                    id: deleteBtn
+                    text: "Delete node"
                     font.pixelSize: 20
                     onClicked: {
-                        fibHeapWrapper.deleteNode(parseInt(deleteKey.text));
-                        deleteKey.text = "";
+                        fibHeapWrapper.deleteNode(parseInt(deleteNode.text));
+                        deleteNode.text = "";
                     }
+                    enabled: doesNodeExist
                 }
 
                 Button {
@@ -93,14 +103,13 @@ ApplicationWindow {
                     onClicked: {
                         fibHeapWrapper.clearHeap();
                     }
-                    enabled: false
+                    enabled: doesNodeExist
                 }
 
                 Connections {
                     target: fibHeapWrapper
                     onNodesChanged: {
-                        rmvBtn.enabled = fibHeapWrapper.getNodes().length > 0;
-                        clearBtn.enabled = fibHeapWrapper.getNodes().length > 0;
+                        doesNodeExist = fibHeapWrapper.getNodes().length > 0;
                     }
                 }
             }

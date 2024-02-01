@@ -5,7 +5,8 @@
 #include <QString>
 #include "FibonacciHeap.h"
 
-class FibonacciHeapWrapper : public QObject {
+class FibonacciHeapWrapper : public QObject
+{
     Q_OBJECT
     Q_PROPERTY(QString currentNodes READ getCurrentNodes NOTIFY nodesChanged)
 

@@ -76,6 +76,8 @@ public:
     void _cascading_cut(FibonacciHeapNode* y);
     void _clear(FibonacciHeapNode* x);
     void _traverseNodes(FibonacciHeapNode* start, string& result) const;
+    FibonacciHeapNode* findNode(int key) const;
+    FibonacciHeapNode* _findNode(FibonacciHeapNode* start, int key) const;
 
     void addChildren(FibonacciHeapNode* current, VisualNode* parentVisualNode, std::vector<VisualNode*>& result) const;
 

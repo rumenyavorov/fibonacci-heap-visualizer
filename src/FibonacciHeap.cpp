@@ -1,6 +1,7 @@
 #include "FibonacciHeap.h"
 
-namespace fib_heap {
+namespace fib_heap
+{
 
 const int FibonacciHeap::m_minimumKey = 0x80000000; // the minimum int value
 
@@ -38,7 +39,8 @@ void FibonacciHeap::delete_node(FibonacciHeapNode* x)
     extract_min();
 }
 
-string FibonacciHeap::getNodeKeys() const {
+string FibonacciHeap::getNodeKeys() const
+{
     string result;
     if (m_minNode != nullptr) {
         _traverseNodes(m_minNode, result);
@@ -46,7 +48,8 @@ string FibonacciHeap::getNodeKeys() const {
     return result;
 }
 
-void FibonacciHeap::clear() {
+void FibonacciHeap::clear()
+{
     _clear(m_minNode);
     m_minNode = nullptr;
     m_numOfNodes = 0;
@@ -286,7 +289,8 @@ void FibonacciHeap::_clear(FibonacciHeapNode* x)
     }
 }
 
-void FibonacciHeap::addChildren(FibonacciHeapNode* current, VisualNode* parentVisualNode, std::vector<VisualNode*>& result) const {
+void FibonacciHeap::addChildren(FibonacciHeapNode* current, VisualNode* parentVisualNode, std::vector<VisualNode*>& result) const
+{
     if (!current) return;
 
     FibonacciHeapNode* startNode = current;
@@ -306,7 +310,37 @@ void FibonacciHeap::addChildren(FibonacciHeapNode* current, VisualNode* parentVi
     } while (current != startNode);
 }
 
-std::vector<VisualNode*> FibonacciHeap::getVisualNodes() const {
+FibonacciHeapNode* FibonacciHeap::findNode(int key) const
+{
+    return _findNode(m_minNode, key);
+}
+
+FibonacciHeapNode* FibonacciHeap::_findNode(FibonacciHeapNode* start, int key) const
+{
+    if (start == nullptr) {
+        return nullptr;
+    }
+
+    FibonacciHeapNode* current = start;
+    do {
+        if (current->key == key) {
+            return current;
+        }
+        if (current->child != nullptr) {
+            FibonacciHeapNode* found = _findNode(current->child, key);
+            if (found != nullptr) {
+                return found;
+            }
+        }
+        current = current->right;
+    } while (current != start);
+
+    return nullptr;
+}
+
+
+std::vector<VisualNode*> FibonacciHeap::getVisualNodes() const
+{
     std::vector<VisualNode*> result;
     if (!m_minNode) return result;
 
