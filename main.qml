@@ -37,11 +37,13 @@ ApplicationWindow {
                 }
 
                 Button {
+                    id: rmvBtn
                     text: "Remove Smallest"
                     font.pixelSize: 20
                     onClicked: {
                         fibHeapWrapper.removeSmallest();
                     }
+                    enabled: false
                 }
 
                 TextField {
@@ -85,10 +87,20 @@ ApplicationWindow {
                 }
 
                 Button {
+                    id: clearBtn
                     text: "Clear Heap"
                     font.pixelSize: 20
                     onClicked: {
                         fibHeapWrapper.clearHeap();
+                    }
+                    enabled: false
+                }
+
+                Connections {
+                    target: fibHeapWrapper
+                    onNodesChanged: {
+                        rmvBtn.enabled = fibHeapWrapper.getNodes().length > 0;
+                        clearBtn.enabled = fibHeapWrapper.getNodes().length > 0;
                     }
                 }
             }
